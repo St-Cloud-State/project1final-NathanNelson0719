@@ -486,75 +486,150 @@ public class WarehouseConsole {
 
 
     public void testWarehouseConsole() {
-        Scanner scanner = new Scanner(System.in);
-        
         System.out.println("Testing Warehouse Console...");
     
-        // Step 1: Manually add Clients C1 to C3
-    System.out.println("\n--- Adding Clients C1 to C3 ---");
-    clientList.insertClient(new Client("C1", "Address1", "123-456-7890", 100.0));
-    clientList.insertClient(new Client("C2", "Address2", "234-567-8901", 100.0));
-    clientList.insertClient(new Client("C3", "Address3", "345-678-9012", 100.0));
-    clientCount += 3;
-
-    // Display all clients
-    System.out.println("\n--- Displaying All Clients ---");
-    displayClients();
-
-    // Step 2: Manually add Products P1 to P3
-    System.out.println("\n--- Adding Products P1 to P3 ---");
-    catalog.addProduct(new Product("P1", 1.0, "Description1", "Category1", 10));
-    catalog.addProduct(new Product("P2", 2.0, "Description2", "Category2", 20));
-    catalog.addProduct(new Product("P3", 3.0, "Description3", "Category3", 30));
-    productCount += 3;
-
-    // Display all products
-    System.out.println("\n--- Displaying All Products ---");
-    displayProducts();
+        // Step 1: Create Clients C1 to C5
+        System.out.println("\n--- Adding Clients C1 to C5 ---");
+        clientList.insertClient(new Client("C1", "Address1", "123-456-7890", 100.0));
+        clientList.insertClient(new Client("C2", "Address2", "234-567-8901", 100.0));
+        clientList.insertClient(new Client("C3", "Address3", "345-678-9012", 100.0));
+        clientList.insertClient(new Client("C4", "Address4", "456-789-0123", 100.0));
+        clientList.insertClient(new Client("C5", "Address5", "567-890-1234", 100.0));
+        clientCount += 5;
     
-        // Add items to C1's wishlist
-        System.out.println("\n--- Adding Items to C1's Wishlist ---");
+        // Print/display all clients with balances
+        System.out.println("\n--- Displaying All Clients ---");
+        displayClients();
+    
+        // Step 2: Create Products P1 to P5
+        System.out.println("\n--- Adding Products P1 to P5 ---");
+        catalog.addProduct(new Product("P1", 1.0, "Description1", "Category1", 10));
+        catalog.addProduct(new Product("P2", 2.0, "Description2", "Category2", 20));
+        catalog.addProduct(new Product("P3", 3.0, "Description3", "Category3", 30));
+        catalog.addProduct(new Product("P4", 4.0, "Description4", "Category4", 40));
+        catalog.addProduct(new Product("P5", 5.0, "Description5", "Category5", 50));
+        productCount += 5;
+    
+        // Print/display all products with prices and quantities
+        System.out.println("\n--- Displaying All Products ---");
+        displayProducts();
+    
+        // Step 3: Add items to C1's wishlist
         Client c1 = getClientByIndex(1);
         Product p1 = getProductByIndex(1);
-        Product p2 = getProductByIndex(2);
-        if (c1 != null && p1 != null && p2 != null) {
+        Product p3 = getProductByIndex(3);
+        Product p5 = getProductByIndex(5);
+        if (c1 != null && p1 != null && p3 != null && p5 != null) {
+            System.out.println("\n--- Adding Items to C1's Wishlist ---");
             c1.addToWishlist(p1, 5);
-            c1.addToWishlist(p2, 5);
-            System.out.println("C1's Wishlist:");
+            c1.addToWishlist(p3, 5);
+            c1.addToWishlist(p5, 5);
             displayClientWishlist(c1);
         }
     
-        // Place order for C1
+        // Step 4: Add items to C2's wishlist
+        Client c2 = getClientByIndex(2);
+        Product p2 = getProductByIndex(2);
+        Product p4 = getProductByIndex(4);
+        if (c2 != null && p1 != null && p2 != null && p4 != null) {
+            System.out.println("\n--- Adding Items to C2's Wishlist ---");
+            c2.addToWishlist(p1, 7);
+            c2.addToWishlist(p2, 7);
+            c2.addToWishlist(p4, 7);
+            displayClientWishlist(c2);
+        }
+    
+        // Step 5: Add items to C3's wishlist
+        Client c3 = getClientByIndex(3);
+        if (c3 != null && p1 != null && p2 != null && p5 != null) {
+            System.out.println("\n--- Adding Items to C3's Wishlist ---");
+            c3.addToWishlist(p1, 6);
+            c3.addToWishlist(p2, 6);
+            c3.addToWishlist(p5, 6);
+            displayClientWishlist(c3);
+        }
+    
+        // Step 6: Place order for C2
+        System.out.println("\n--- Placing Order for C2 ---");
+        if (c2 != null) {
+            placeOrder(c2);
+        }
+    
+        // Display updated clients
+        System.out.println("\n--- Updated Client Balances ---");
+        displayClients();
+    
+        // Step 7: Place order for C3
+        System.out.println("\n--- Placing Order for C3 ---");
+        if (c3 != null) {
+            placeOrder(c3);
+        }
+    
+        // Display updated clients
+        System.out.println("\n--- Updated Client Balances ---");
+        displayClients();
+    
+        // Display C2 and C3's wishlist post-order
+        System.out.println("\n--- C2's Wishlist Post-Order ---");
+        displayClientWishlist(c2);
+        System.out.println("\n--- C3's Wishlist Post-Order ---");
+        displayClientWishlist(c3);
+    
+        // Step 8: Print P1's and P2's waitlists
+        System.out.println("\n--- P1's Waitlist ---");
+        System.out.println(p1.getWaitlist());
+        System.out.println("\n--- P2's Waitlist ---");
+        System.out.println(p2.getWaitlist());
+    
+        // Step 9: Place order for C1
         System.out.println("\n--- Placing Order for C1 ---");
         if (c1 != null) {
             placeOrder(c1);
         }
     
-        // Display updated clients and products
+        // Display updated clients
         System.out.println("\n--- Updated Client Balances ---");
         displayClients();
-        System.out.println("\n--- Updated Product Quantities ---");
+    
+        // Display C1's wishlist post-order
+        System.out.println("\n--- C1's Wishlist Post-Order ---");
+        displayClientWishlist(c1);
+    
+        // Step 10: Record receipt of $100 payment for C1 and C2
+        System.out.println("\n--- Recording $100 Payment for C1 and C2 ---");
+        if (c1 != null) {
+            c1.addToBalance(100.0);
+        }
+        if (c2 != null) {
+            c2.addToBalance(100.0);
+        }
+    
+        // Display updated clients after payment
+        System.out.println("\n--- Updated Client Balances After Payment ---");
+        displayClients();
+    
+        // Step 11: Receive a shipment of 100 items of P1
+        System.out.println("\n--- Receiving Shipment of 100 Items for P1 ---");
+        if (p1 != null) {
+            p1.addToQuantity(100);
+            p1.fulfillWaitlist(100);
+        }
+    
+        // Display all products after shipment
+        System.out.println("\n--- Updated Product Quantities After Shipment ---");
         displayProducts();
     
-        // Record payment for C1 and update balance
-        System.out.println("\n--- Recording $50 Payment for C1 ---");
-        if (c1 != null) {
-            c1.addToBalance(50.0);
-        }
-    
-        // Receive shipment for P1
-        System.out.println("\n--- Receiving Shipment of 15 Items for P1 ---");
-        if (p1 != null) {
-            p1.addToQuantity(15);
-            p1.fulfillWaitlist(15);
-        }
-    
-        // Display final state of clients and products
+        // Final display of all clients with balances
         System.out.println("\n--- Final Client Balances ---");
         displayClients();
-        System.out.println("\n--- Final Product Quantities ---");
-        displayProducts();
+    
+        // Optional: Assume `Order` and `Invoice` functionality exists for the final print statements for C1 and C2
+        // System.out.println("\n--- Invoices for C1 ---");
+        // displayInvoicesForClient(c1);
+        // System.out.println("\n--- Invoices for C2 ---");
+        // displayInvoicesForClient(c2);
     }
+    
     
 
 
@@ -571,7 +646,7 @@ public class WarehouseConsole {
 
 
 
-        //app.testWarehouseConsole();
+        app.testWarehouseConsole();
     }
 
 
